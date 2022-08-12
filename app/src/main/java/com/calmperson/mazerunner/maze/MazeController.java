@@ -10,4 +10,12 @@ public class MazeController {
         this.view = view;
     }
 
+    public void generateMaze() {
+        updateView(maze.generate());
+    }
+
+    private void updateView(int[][] maze) {
+        view.update(maze);
+    }
+
 }
