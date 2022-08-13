@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Display;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
@@ -21,16 +22,21 @@ public class GameActivity extends Activity {
         setContentView(R.layout.game_activity);
 
         FrameLayout layout = findViewById(R.id.frameLayout);
-        DisplayMetrics metrics = getDisplayMetrics(this);
-        int height = metrics.heightPixels / MazeView.CELL_HEIGHT;
-        int width = metrics.widthPixels / MazeView.CELL_WIDTH;
-
-        Maze maze = new Maze(height, width);
-        MazeView view = new MazeView(this);
-        MazeController controller = new MazeController(maze, view);
-
-        controller.generateMaze();
-        setContentView(view);
+        ViewTreeObserver vto = layout.getViewTreeObserver();
+        Context context = this;
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener(){
+            @Override
+            public void onGlobalLayout() {
+                layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                int height = layout.getMeasuredHeight() / MazeView.CELL_HEIGHT;
+                int width = layout.getMeasuredWidth() / MazeView.CELL_WIDTH;
+                Maze maze = new Maze(height, width);
+                MazeView view = new MazeView(context);
+                MazeController controller = new MazeController(maze, view);
+                controller.generateMaze();
+                layout.addView(view);
+            }
+        });
 
     }
 

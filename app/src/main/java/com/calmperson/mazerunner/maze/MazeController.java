@@ -11,7 +11,8 @@ public class MazeController {
     }
 
     public void generateMaze() {
-        updateView(maze.generate());
+        maze.generateNewMaze();
+        updateView(maze.getMaze());
     }
 
     private void updateView(int[][] maze) {
