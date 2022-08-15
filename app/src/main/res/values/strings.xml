@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Maze Runner</string>
     <string name="start">Start</string>
+    <string name="show_path">Show path</string>
+    <string name="back">Back</string>
+    <string name="refresh">Refresh</string>
+    <string name="exit">exit</string>
 </resources>

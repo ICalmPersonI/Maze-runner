@@ -10,12 +10,28 @@ public class MazeController {
         this.view = view;
     }
 
-    public void generateMaze() {
+    public void generateNewMaze() {
         maze.generateNewMaze();
         updateView(maze.getMaze());
     }
 
-    private void updateView(int[][] maze) {
+    public void showPath() {
+        if (!maze.isPathFound) {
+            maze.showPath();
+            updateView(maze.getMaze());
+        }
+    }
+
+    public boolean isMazeCompleted() {
+        return maze.isUserPathValid();
+    }
+
+    public void drawPath(int y, int x) {
+        maze.getMaze()[y][x].setType(Node.Type.PATH);
+        updateView(maze.getMaze());
+    }
+
+    private void updateView(Node[][] maze) {
         view.update(maze);
     }
 
